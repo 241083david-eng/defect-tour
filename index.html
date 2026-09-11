@@ -20,8 +20,10 @@
   --sev1:#C22B1B;
   --sev2:#D98A0B;
   --sev3:#3F7357;
-  --radius:10px;
-  --tap:56px;
+  --mark:#E02020;
+  --radius:12px;
+  --tap:60px;
+  --gap:18px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
@@ -30,8 +32,7 @@ body{
   color:var(--ink);
   font-family:'Assistant',system-ui,'Segoe UI',Roboto,sans-serif;
   font-size:17px;
-  line-height:1.5;
-  padding-bottom:96px;
+  line-height:1.6;
 }
 button,input,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
 
@@ -39,89 +40,102 @@ button,input,textarea,select{font-family:inherit;font-size:inherit;color:inherit
 .topbar{
   position:sticky;top:0;z-index:20;
   background:var(--action);color:#fff;
-  padding:10px 14px;
-  display:flex;align-items:center;gap:10px;
+  padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
   box-shadow:0 1px 0 rgba(0,0,0,.15);
 }
-.topbar h1{font-size:19px;font-weight:800;margin:0;flex:1;letter-spacing:-.01em}
+.topbar h1{font-size:20px;font-weight:800;margin:0;flex:1;letter-spacing:-.01em}
 .topbar .count{
   background:rgba(255,255,255,.18);
-  border-radius:999px;padding:2px 12px;font-weight:600;font-size:15px;
+  border-radius:999px;padding:3px 14px;font-weight:600;font-size:15px;
 }
-.netdot{width:9px;height:9px;border-radius:50%;background:#5BD07E}
+.netdot{width:10px;height:10px;border-radius:50%;background:#5BD07E;flex:none}
 .netdot.off{background:#F0B429}
 
-/* ---------- tour header ---------- */
-.tour{background:var(--surface);border-bottom:1px solid var(--line);padding:12px 14px}
-.tour summary{
-  cursor:pointer;font-weight:600;color:var(--ink2);
-  list-style:none;display:flex;justify-content:space-between;align-items:center;
-}
-.tour summary::-webkit-details-marker{display:none}
-.tour summary::after{content:'▾';font-size:15px}
-.tour[open] summary::after{content:'▴'}
-.tour .fields{margin-top:12px;display:grid;gap:10px}
+/* ---------- views ---------- */
+.view{display:none;padding:var(--gap) var(--gap) 60px}
+.view.on{display:block}
+h2.section{font-size:19px;margin:8px 0 14px;font-weight:800}
 
-label{display:block;font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:4px}
+/* ---------- buttons ---------- */
+.btn{
+  display:block;width:100%;min-height:var(--tap);
+  border-radius:var(--radius);border:1px solid var(--action);
+  background:#fff;color:var(--action);font-weight:800;font-size:17px;
+  padding:14px 16px;margin-bottom:14px;
+}
+.btn.primary{background:var(--action);color:#fff;border-color:var(--action)}
+.btn.quiet{border-color:var(--line);color:var(--ink2)}
+.btn.danger{border-color:var(--sev1);color:var(--sev1)}
+.btn:disabled{opacity:.45}
+.btn:active{transform:translateY(1px)}
+
+.shoot{
+  width:100%;min-height:92px;
+  background:var(--action);color:#fff;border:0;border-radius:16px;
+  font-size:21px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  box-shadow:0 3px 0 var(--action-dark);
+  margin:8px 0 12px;
+}
+.shoot:active{transform:translateY(2px);box-shadow:0 1px 0 var(--action-dark)}
+.shoot svg{width:32px;height:32px;fill:currentColor}
+.hint{margin:0 2px 26px;font-size:15px;color:var(--ink2)}
+
+/* ---------- fields ---------- */
+.panel{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:18px;margin-bottom:26px;
+}
+.field{margin-bottom:18px}
+.field:last-child{margin-bottom:0}
+label{display:block;font-size:15px;font-weight:600;color:var(--ink2);margin-bottom:7px}
+label .req{color:var(--sev1)}
 input[type=text],input[type=date],textarea,select{
   width:100%;background:#fff;border:1px solid var(--line);
-  border-radius:var(--radius);padding:11px 12px;
+  border-radius:var(--radius);padding:14px;
 }
-textarea{min-height:96px;resize:vertical}
+textarea{min-height:110px;resize:vertical}
 input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-offset:1px;border-color:var(--action)}
+.bad{border-color:var(--sev1) !important;background:#FFF6F5}
 
-/* ---------- capture ---------- */
-.capture{padding:16px 14px}
-.shoot{
-  width:100%;min-height:88px;
-  background:var(--action);color:#fff;border:0;border-radius:14px;
-  font-size:20px;font-weight:800;
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  box-shadow:0 3px 0 #06416F;
-}
-.shoot:active{transform:translateY(2px);box-shadow:0 1px 0 #06416F}
-.shoot svg{width:30px;height:30px;fill:currentColor}
-.hint{margin:10px 2px 0;font-size:14px;color:var(--ink2)}
-
-/* ---------- list ---------- */
-.list{padding:0 14px;display:grid;gap:12px}
+/* ---------- defect cards ---------- */
+.list{display:grid;gap:16px;margin-bottom:30px}
 .empty{
   border:1px dashed var(--line);border-radius:var(--radius);
-  padding:26px 18px;text-align:center;color:var(--ink2);background:#fff;
+  padding:32px 20px;text-align:center;color:var(--ink2);background:#fff;
 }
 .card{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  overflow:hidden;display:grid;grid-template-columns:6px 88px 1fr;
+  overflow:hidden;display:grid;grid-template-columns:7px 100px 1fr;
 }
 .card .bar{background:var(--sev3)}
 .card[data-sev="מיידי"] .bar{background:var(--sev1)}
 .card[data-sev="דחוף"] .bar{background:var(--sev2)}
-.card .thumb{width:88px;height:100%;min-height:92px;object-fit:cover;display:block;background:#DDE3E7}
-.card .body{padding:10px 12px;min-width:0}
+.card .thumb{width:100px;height:100%;min-height:118px;object-fit:cover;display:block;background:#DDE3E7}
+.card .body{padding:14px 16px;min-width:0}
 .card .seq{font-weight:800;color:var(--ink2);font-size:14px}
-.card .loc{font-weight:800;margin:0 0 2px}
+.card .loc{font-weight:800;margin:2px 0 4px;font-size:18px}
 .card .desc{
-  margin:0;color:var(--ink2);font-size:15px;
+  margin:0;color:var(--ink2);font-size:16px;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
-.card .meta{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink2)}
-.card .acts{margin-top:8px;display:flex;gap:14px}
-.card .acts button{background:none;border:0;padding:4px 0;font-weight:600;color:var(--action)}
+.card .meta{margin-top:8px;font-size:14px;color:var(--ink2)}
+.card .acts{margin-top:12px;display:flex;gap:22px}
+.card .acts button{background:none;border:0;padding:6px 0;font-weight:700;color:var(--action);font-size:16px}
 .card .acts button.del{color:var(--sev1)}
 
-/* ---------- bottom bar ---------- */
-.bottom{
-  position:fixed;bottom:0;right:0;left:0;z-index:20;
-  background:var(--surface);border-top:1px solid var(--line);
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  display:flex;gap:10px;
+/* ---------- tour cards ---------- */
+.tourcard{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:18px;margin-bottom:16px;
 }
-.bottom button{
-  flex:1;min-height:var(--tap);border-radius:var(--radius);border:1px solid var(--action);
-  background:#fff;color:var(--action);font-weight:800;
-}
-.bottom button.primary{background:var(--action);color:#fff}
-.bottom button:disabled{opacity:.45}
+.tourcard h3{margin:0 0 6px;font-size:19px}
+.tourcard .sub{color:var(--ink2);font-size:15px;margin:0 0 14px}
+.tourcard .row{display:flex;gap:20px}
+.tourcard .row button{background:none;border:0;padding:6px 0;font-weight:700;color:var(--action);font-size:16px}
+.tourcard .row button.del{color:var(--sev1)}
+.tourcard.open{border-color:var(--action);border-width:2px}
 
 /* ---------- sheet ---------- */
 .sheet{
@@ -129,106 +143,178 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
   display:none;align-items:flex-end;
 }
 .sheet.open{display:flex}
-.sheet .panel{
+.sheet .inner{
   background:var(--bg);width:100%;max-height:94vh;overflow-y:auto;
-  border-radius:16px 16px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));
+  border-radius:18px 18px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));
 }
-.sheet h2{margin:2px 0 12px;font-size:20px}
-.preview{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:12px}
-.preview img{width:96px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
-.preview button{
-  width:96px;height:96px;flex:none;border:1px dashed var(--line);background:#fff;
-  border-radius:8px;color:var(--action);font-weight:700;
+.sheet h2{margin:4px 0 18px;font-size:21px}
+.photos{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;margin-bottom:18px}
+.photo{position:relative;flex:none}
+.photo img{width:118px;height:118px;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.photo .mark{
+  position:absolute;bottom:6px;right:6px;
+  background:rgba(10,92,158,.92);color:#fff;border:0;border-radius:8px;
+  padding:5px 11px;font-size:14px;font-weight:700;
 }
-.chips{display:flex;gap:8px}
+.photo .rm{
+  position:absolute;top:6px;left:6px;
+  background:rgba(194,43,27,.92);color:#fff;border:0;border-radius:50%;
+  width:28px;height:28px;font-size:17px;font-weight:800;line-height:1;
+}
+.photo .badge{
+  position:absolute;top:6px;right:6px;
+  background:var(--mark);color:#fff;border-radius:6px;
+  padding:2px 7px;font-size:12px;font-weight:800;
+}
+.addphoto{
+  width:118px;height:118px;flex:none;border:1px dashed var(--line);background:#fff;
+  border-radius:10px;color:var(--action);font-weight:700;font-size:15px;
+}
+.chips{display:flex;gap:12px}
 .chips button{
-  flex:1;min-height:48px;border-radius:var(--radius);border:1px solid var(--line);
+  flex:1;min-height:54px;border-radius:var(--radius);border:1px solid var(--line);
   background:#fff;font-weight:700;
 }
 .chips button[aria-pressed=true]{color:#fff;border-color:transparent}
 .chips button[data-sev="מיידי"][aria-pressed=true]{background:var(--sev1)}
 .chips button[data-sev="דחוף"][aria-pressed=true]{background:var(--sev2)}
 .chips button[data-sev="שוטף"][aria-pressed=true]{background:var(--sev3)}
-.sheet .row{display:grid;gap:10px;margin-bottom:12px}
-.sheet .save{
-  width:100%;min-height:var(--tap);border:0;border-radius:var(--radius);
-  background:var(--action);color:#fff;font-weight:800;font-size:18px;margin-top:4px;
+
+/* ---------- annotation editor ---------- */
+.editor{
+  position:fixed;inset:0;z-index:60;background:#0D1620;
+  display:none;flex-direction:column;
 }
-.sheet .cancel{
-  width:100%;min-height:48px;border:0;background:none;color:var(--ink2);
-  font-weight:600;margin-top:8px;
+.editor.open{display:flex}
+.editor .stage{
+  flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+  padding:12px;overflow:hidden;
 }
+.canvaswrap{position:relative;line-height:0}
+.canvaswrap img{display:block;width:100%;height:100%;object-fit:contain}
+.canvaswrap svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.editor .tools{
+  background:#16232F;padding:16px 14px calc(16px + env(safe-area-inset-bottom));
+  display:grid;gap:14px;
+}
+.toolrow{display:flex;gap:12px}
+.toolrow button{
+  flex:1;min-height:56px;border-radius:var(--radius);border:1px solid #2C3D4C;
+  background:#1E2E3C;color:#E6EDF2;font-weight:700;font-size:16px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.toolrow button svg{width:22px;height:22px;fill:none;stroke:var(--mark);stroke-width:2.4}
+.toolrow button.wide{flex:2}
+.toolrow button.done{background:var(--action);border-color:var(--action);color:#fff}
+.toolrow button.del{border-color:#5A2723;color:#FF8A7D}
+.toolrow button:disabled{opacity:.4}
+.edhint{color:#8FA3B3;font-size:14px;text-align:center;margin:0}
 
 /* ---------- toast ---------- */
 .toast{
-  position:fixed;bottom:96px;right:14px;left:14px;z-index:60;
+  position:fixed;bottom:28px;right:18px;left:18px;z-index:80;
   background:var(--ink);color:#fff;border-radius:var(--radius);
-  padding:12px 14px;text-align:center;font-weight:600;
-  opacity:0;transform:translateY(8px);pointer-events:none;transition:.18s;
+  padding:15px 18px;text-align:center;font-weight:600;
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:.18s;
 }
 .toast.show{opacity:1;transform:none}
 
-/* ---------- report (rendered to PDF) ---------- */
+.storage{color:var(--ink2);font-size:14px;margin:6px 2px 20px}
+.storage.warn{color:var(--sev1);font-weight:700}
+
+/* ---------- report ---------- */
 #report{position:fixed;right:-99999px;top:0;width:794px;background:#fff}
 .rep{padding:34px 40px;font-family:'Assistant',system-ui,sans-serif;color:#101E28}
-.rep-head{border-bottom:3px solid #0A5C9E;padding-bottom:14px;margin-bottom:20px}
-.rep-head h1{margin:0 0 6px;font-size:28px}
-.rep-head .sub{color:#5B6B75;font-size:15px;line-height:1.8}
+.rep-head{border-bottom:3px solid #0A5C9E;padding-bottom:16px;margin-bottom:22px}
+.rep-head h1{margin:0 0 8px;font-size:28px}
+.rep-head .sub{color:#5B6B75;font-size:15px;line-height:1.9}
 .rep-item{
   border:1px solid #D3DBE0;border-right:6px solid #3F7357;border-radius:8px;
-  padding:14px 16px;margin-bottom:14px;page-break-inside:avoid;
+  padding:16px 18px;margin-bottom:16px;page-break-inside:avoid;
 }
 .rep-item[data-sev="מיידי"]{border-right-color:#C22B1B}
 .rep-item[data-sev="דחוף"]{border-right-color:#D98A0B}
-.rep-item h3{margin:0 0 4px;font-size:19px}
-.rep-item .tags{color:#5B6B75;font-size:14px;margin-bottom:8px}
-.rep-item p{margin:0 0 10px;font-size:16px;line-height:1.6}
-.rep-imgs{display:flex;gap:8px;flex-wrap:wrap}
+.rep-item h3{margin:0 0 5px;font-size:19px}
+.rep-item .tags{color:#5B6B75;font-size:14px;margin-bottom:10px}
+.rep-item p{margin:0 0 12px;font-size:16px;line-height:1.6}
+.rep-imgs{display:flex;gap:10px;flex-wrap:wrap}
 .rep-imgs img{width:220px;height:165px;object-fit:cover;border-radius:6px;border:1px solid #D3DBE0}
-.rep-foot{margin-top:18px;padding-top:12px;border-top:1px solid #D3DBE0;color:#5B6B75;font-size:13px}
+.rep-foot{margin-top:20px;padding-top:14px;border-top:1px solid #D3DBE0;color:#5B6B75;font-size:13px}
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <span class="netdot" id="netdot" title="חיבור"></span>
-  <h1>סיור ליקויים</h1>
-  <span class="count" id="count">0</span>
+  <span class="netdot" id="netdot"></span>
+  <h1 id="barTitle">סיור ליקויים</h1>
+  <span class="count" id="count" hidden>0</span>
 </div>
 
-<details class="tour" id="tourBox">
-  <summary>פרטי הסיור</summary>
-  <div class="fields">
-    <div><label for="fBuilding">בניין / כתובת</label><input type="text" id="fBuilding" placeholder="לדוגמה: הרצל 14, ראש העין"></div>
-    <div><label for="fClient">לקוח / ועד בית</label><input type="text" id="fClient" placeholder="שם הלקוח"></div>
-    <div><label for="fInspector">שם הבודק</label><input type="text" id="fInspector" placeholder="דוד"></div>
-    <div><label for="fDate">תאריך הסיור</label><input type="date" id="fDate"></div>
-  </div>
-</details>
+<!-- ============ VIEW: tours ============ -->
+<main class="view on" id="viewTours">
+  <button class="shoot" id="btnNewTour">
+    <svg viewBox="0 0 24 24"><path d="M11 5h2v14h-2z"/><path d="M5 11h14v2H5z"/></svg>
+    סיור חדש
+  </button>
+  <p class="hint">כל סיור נשמר במכשיר. סיור שהסתיים נשאר ברשימה וניתן לפתוח אותו שוב.</p>
 
-<div class="capture">
+  <h2 class="section">הסיורים שלי</h2>
+  <div id="tourList"></div>
+
+  <h2 class="section">גיבוי</h2>
+  <p class="storage" id="storageInfo"></p>
+  <button class="btn" id="btnExport">ייצוא גיבוי לקובץ</button>
+  <button class="btn quiet" id="btnImport">שחזור מקובץ גיבוי</button>
+</main>
+
+<!-- ============ VIEW: single tour ============ -->
+<main class="view" id="viewTour">
+  <button class="btn quiet" id="btnBack">חזרה לרשימת הסיורים</button>
+
+  <h2 class="section">פרטי הסיור</h2>
+  <div class="panel">
+    <div class="field">
+      <label for="fBuilding">בניין / כתובת <span class="req">*</span></label>
+      <input type="text" id="fBuilding" placeholder="הרצל 14, ראש העין">
+    </div>
+    <div class="field">
+      <label for="fClient">לקוח / ועד בית <span class="req">*</span></label>
+      <input type="text" id="fClient" placeholder="שם הלקוח">
+    </div>
+    <div class="field">
+      <label for="fInspector">שם הבודק <span class="req">*</span></label>
+      <input type="text" id="fInspector" placeholder="שם מלא">
+    </div>
+    <div class="field">
+      <label for="fDate">תאריך הסיור <span class="req">*</span></label>
+      <input type="date" id="fDate">
+    </div>
+  </div>
+
   <button class="shoot" id="btnShoot">
     <svg viewBox="0 0 24 24"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3zm3 5.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11m0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7"/></svg>
     צלם ליקוי
   </button>
-  <p class="hint">כל ליקוי נשמר במכשיר מיד. אפשר לעבוד בלי רשת ולהפיק את הדוח בסוף.</p>
-</div>
+  <p class="hint">כל ליקוי נשמר מיד. אפשר לעבוד בלי רשת ולהפיק את הדוח בסוף.</p>
 
-<div class="list" id="list"></div>
+  <h2 class="section">ליקויים</h2>
+  <div class="list" id="list"></div>
 
-<div class="bottom">
-  <button class="primary" id="btnPdf" disabled>צור PDF ושתף</button>
-  <button id="btnText" disabled>סיכום לוואטסאפ</button>
-  <button id="btnNew">סיור חדש</button>
-</div>
+  <h2 class="section">הפקת דוח</h2>
+  <button class="btn primary" id="btnPdfShare">צור PDF ושתף</button>
+  <button class="btn" id="btnPdfDownload">הורד PDF למכשיר</button>
+  <button class="btn quiet" id="btnText">סיכום טקסט לוואטסאפ</button>
+  <button class="btn danger" id="btnFinish">סיים סיור</button>
+</main>
 
+<!-- ============ SHEET: defect ============ -->
 <div class="sheet" id="sheet">
-  <div class="panel">
+  <div class="inner">
     <h2 id="sheetTitle">ליקוי חדש</h2>
-    <div class="preview" id="preview"></div>
-    <div class="row">
-      <div>
-        <label for="fLoc">מיקום</label>
+    <div class="photos" id="photos"></div>
+    <div class="panel">
+      <div class="field">
+        <label for="fLoc">מיקום <span class="req">*</span></label>
         <input type="text" id="fLoc" list="locList" placeholder="חדר מדרגות, קומה 3">
         <datalist id="locList">
           <option value="לובי"></option><option value="חדר מדרגות"></option>
@@ -237,57 +323,99 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
           <option value="חדר חשמל"></option><option value="חצר"></option>
         </datalist>
       </div>
-      <div>
-        <label for="fDesc">תיאור הליקוי</label>
-        <textarea id="fDesc" placeholder="מנורת LED בתקרת חדר המדרגות שרופה, גוף התאורה תלוי"></textarea>
+      <div class="field">
+        <label for="fDesc">תיאור הליקוי <span class="req">*</span></label>
+        <textarea id="fDesc" placeholder="מנורת תקרה בחדר המדרגות שרופה, גוף התאורה תלוי"></textarea>
       </div>
-      <div>
-        <label>דחיפות</label>
+      <div class="field">
+        <label>דחיפות <span class="req">*</span></label>
         <div class="chips" id="sevChips">
           <button type="button" data-sev="מיידי" aria-pressed="false">מיידי</button>
           <button type="button" data-sev="דחוף" aria-pressed="false">דחוף</button>
           <button type="button" data-sev="שוטף" aria-pressed="true">שוטף</button>
         </div>
       </div>
-      <div>
-        <label for="fTrade">בעל מקצוע נדרש</label>
+      <div class="field">
+        <label for="fTrade">בעל מקצוע נדרש <span class="req">*</span></label>
         <select id="fTrade">
           <option>חשמלאי</option><option>אינסטלטור</option><option>מסגר</option>
           <option>מנעולן</option><option>שיפוצים</option><option>טכנאי מעליות</option>
-          <option>ניקיון</option><option>גינון</option><option>לא נדרש / לבירור</option>
+          <option>ניקיון</option><option>גינון</option><option>לבירור</option>
         </select>
       </div>
     </div>
-    <button class="save" id="btnSave">שמור והמשך</button>
-    <button class="cancel" id="btnCancel">ביטול</button>
+    <button class="btn primary" id="btnSave">שמור והמשך</button>
+    <button class="btn quiet" id="btnCancel">ביטול</button>
+  </div>
+</div>
+
+<!-- ============ ANNOTATION EDITOR ============ -->
+<div class="editor" id="editor">
+  <div class="stage">
+    <div class="canvaswrap" id="cwrap">
+      <img id="edImg" alt="">
+      <svg id="edSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+  </div>
+  <div class="tools">
+    <p class="edhint" id="edHint">בחר כלי כדי להוסיף סימון. גרירה מזיזה, הידית משנה גודל וכיוון.</p>
+    <div class="toolrow">
+      <button type="button" id="tArrow">
+        <svg viewBox="0 0 24 24"><path d="M4 20 20 4M20 4h-8M20 4v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        חץ
+      </button>
+      <button type="button" id="tCircle">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+        עיגול
+      </button>
+      <button type="button" id="tText">
+        <svg viewBox="0 0 24 24"><path d="M5 6h14M12 6v13" stroke-linecap="round"/></svg>
+        טקסט
+      </button>
+    </div>
+    <div class="toolrow">
+      <button type="button" class="del" id="tDel" disabled>מחק סימון</button>
+      <button type="button" id="tCancel">ביטול</button>
+      <button type="button" class="done wide" id="tDone">שמור סימונים</button>
+    </div>
   </div>
 </div>
 
 <input type="file" id="camIn" accept="image/*" capture="environment" hidden>
+<input type="file" id="fileIn" accept="application/json,.json" hidden>
 <div class="toast" id="toast"></div>
 <div id="report"></div>
 
 <script>
-/* ============ state ============ */
+/* ==================== constants & state ==================== */
 const MAX_SIDE = 1400, JPEG_Q = 0.72;
 const SEVS = ['מיידי','דחוף','שוטף'];
-let db, defects = [], draft = null, editingId = null;
+
+let db;
+let tours = [];        // all tours
+let activeTour = null; // tour object being edited
+let defects = [];      // defects of activeTour
+let draft = null;      // defect being edited in sheet
+let edState = null;    // annotation editor state
 
 const $ = id => document.getElementById(id);
+
+/* ==================== toast ==================== */
 const toastEl = $('toast');
 function toast(msg){
   toastEl.textContent = msg;
   toastEl.classList.add('show');
   clearTimeout(toast.t);
-  toast.t = setTimeout(()=>toastEl.classList.remove('show'), 2200);
+  toast.t = setTimeout(()=>toastEl.classList.remove('show'), 2600);
 }
 
-/* ============ IndexedDB ============ */
+/* ==================== IndexedDB ==================== */
 function openDB(){
   return new Promise((res,rej)=>{
-    const req = indexedDB.open('defectTourDB', 1);
+    const req = indexedDB.open('defectTourDB', 2);
     req.onupgradeneeded = e => {
       const d = e.target.result;
+      if(!d.objectStoreNames.contains('tours'))   d.createObjectStore('tours',{keyPath:'id'});
       if(!d.objectStoreNames.contains('defects')) d.createObjectStore('defects',{keyPath:'id'});
       if(!d.objectStoreNames.contains('meta'))    d.createObjectStore('meta',{keyPath:'key'});
     };
@@ -295,130 +423,272 @@ function openDB(){
     req.onerror   = ()=>rej(req.error);
   });
 }
-function tx(store, mode){ return db.transaction(store, mode).objectStore(store); }
-function put(store, val){
-  return new Promise((res,rej)=>{ const r = tx(store,'readwrite').put(val); r.onsuccess=res; r.onerror=()=>rej(r.error); });
-}
-function delRec(store, key){
-  return new Promise((res,rej)=>{ const r = tx(store,'readwrite').delete(key); r.onsuccess=res; r.onerror=()=>rej(r.error); });
-}
-function getAll(store){
-  return new Promise((res,rej)=>{ const r = tx(store,'readonly').getAll(); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
-}
-function getOne(store, key){
-  return new Promise((res,rej)=>{ const r = tx(store,'readonly').get(key); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
-}
-function clearStore(store){
-  return new Promise((res,rej)=>{ const r = tx(store,'readwrite').clear(); r.onsuccess=res; r.onerror=()=>rej(r.error); });
-}
+const store = (s,m)=>db.transaction(s,m).objectStore(s);
+const put    = (s,v)=>new Promise((res,rej)=>{const r=store(s,'readwrite').put(v); r.onsuccess=res; r.onerror=()=>rej(r.error);});
+const delRec = (s,k)=>new Promise((res,rej)=>{const r=store(s,'readwrite').delete(k); r.onsuccess=res; r.onerror=()=>rej(r.error);});
+const getAll = s   =>new Promise((res,rej)=>{const r=store(s,'readonly').getAll(); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);});
+const getOne = (s,k)=>new Promise((res,rej)=>{const r=store(s,'readonly').get(k); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error);});
+const clearS = s   =>new Promise((res,rej)=>{const r=store(s,'readwrite').clear(); r.onsuccess=res; r.onerror=()=>rej(r.error);});
 
-/* ============ image compression ============ */
+/* ==================== helpers ==================== */
+const uid = p => p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function heDate(iso){
+  if(!iso) return '';
+  const p = iso.split('-');
+  return p[2] + '/' + p[1] + '/' + p[0];
+}
 async function compress(file){
   const bmp = await createImageBitmap(file, {imageOrientation:'from-image'});
   const scale = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
-  const w = Math.round(bmp.width * scale), h = Math.round(bmp.height * scale);
+  const w = Math.round(bmp.width*scale), h = Math.round(bmp.height*scale);
   const cv = document.createElement('canvas');
   cv.width = w; cv.height = h;
   cv.getContext('2d').drawImage(bmp, 0, 0, w, h);
   bmp.close();
   return new Promise(r => cv.toBlob(r, 'image/jpeg', JPEG_Q));
 }
-
-/* ============ tour meta ============ */
-const metaFields = {building:'fBuilding', client:'fClient', inspector:'fInspector', date:'fDate'};
-async function loadMeta(){
-  const m = await getOne('meta','tour');
-  const data = (m && m.value) || {};
-  for(const k in metaFields) $(metaFields[k]).value = data[k] || '';
-  if(!$('fDate').value) $('fDate').value = new Date().toISOString().slice(0,10);
+function blobToDataURL(b){
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload = ()=>res(r.result);
+    r.onerror = ()=>rej(r.error);
+    r.readAsDataURL(b);
+  });
 }
-async function saveMeta(){
-  const value = {};
-  for(const k in metaFields) value[k] = $(metaFields[k]).value.trim();
-  await put('meta',{key:'tour', value});
+function dataURLToBlob(u){
+  const [head, body] = u.split(',');
+  const mime = head.match(/:(.*?);/)[1];
+  const bin = atob(body);
+  const arr = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], {type:mime});
 }
-Object.values(metaFields).forEach(id => $(id).addEventListener('change', saveMeta));
 
-/* ============ camera + draft ============ */
-$('btnShoot').addEventListener('click', ()=>{ draft = null; editingId = null; $('camIn').click(); });
+/* ==================== views ==================== */
+function showView(name){
+  $('viewTours').classList.toggle('on', name === 'tours');
+  $('viewTour').classList.toggle('on', name === 'tour');
+  $('count').hidden = name !== 'tour';
+  $('barTitle').textContent = name === 'tours' ? 'סיור ליקויים' : (activeTour && activeTour.building || 'סיור');
+  window.scrollTo(0,0);
+}
+
+/* ==================== tours list ==================== */
+async function loadTours(){
+  tours = (await getAll('tours')).sort((a,b)=>b.createdAt-a.createdAt);
+  const all = await getAll('defects');
+  const box = $('tourList');
+  box.innerHTML = '';
+  if(!tours.length){
+    box.innerHTML = '<div class="empty">אין סיורים עדיין. לחץ על "סיור חדש" כדי להתחיל.</div>';
+    return;
+  }
+  tours.forEach(t=>{
+    const n = all.filter(d=>d.tourId === t.id).length;
+    const el = document.createElement('div');
+    el.className = 'tourcard' + (t.status === 'open' ? ' open' : '');
+    el.innerHTML =
+      '<h3></h3><p class="sub"></p>' +
+      '<div class="row"><button class="op">פתח</button><button class="del">מחק</button></div>';
+    el.querySelector('h3').textContent = t.building || 'סיור ללא שם';
+    el.querySelector('.sub').textContent =
+      heDate(t.date) + ' · ' + n + ' ליקויים · ' + (t.status === 'open' ? 'פתוח' : 'הסתיים');
+    el.querySelector('.op').addEventListener('click', ()=>openTour(t.id));
+    el.querySelector('.del').addEventListener('click', ()=>removeTour(t));
+    box.appendChild(el);
+  });
+}
+
+$('btnNewTour').addEventListener('click', async ()=>{
+  const t = {
+    id: uid('t'), building:'', client:'', inspector:'', date:new Date().toISOString().slice(0,10),
+    status:'open', createdAt:Date.now()
+  };
+  await put('tours', t);
+  await openTour(t.id);
+});
+
+async function openTour(id){
+  activeTour = await getOne('tours', id);
+  if(!activeTour) return toast('הסיור לא נמצא');
+  $('fBuilding').value  = activeTour.building;
+  $('fClient').value    = activeTour.client;
+  $('fInspector').value = activeTour.inspector;
+  $('fDate').value      = activeTour.date;
+  clearBad();
+  await refreshDefects();
+  showView('tour');
+}
+
+async function removeTour(t){
+  if(!confirm('למחוק את הסיור "' + (t.building || 'ללא שם') + '" וכל הליקויים שבו? הפעולה בלתי הפיכה.')) return;
+  const all = await getAll('defects');
+  for(const d of all.filter(x=>x.tourId === t.id)) await delRec('defects', d.id);
+  await delRec('tours', t.id);
+  await loadTours();
+  await showStorage();
+  toast('הסיור נמחק');
+}
+
+/* ==================== tour fields ==================== */
+const tourFields = {building:'fBuilding', client:'fClient', inspector:'fInspector', date:'fDate'};
+Object.entries(tourFields).forEach(([key,id])=>{
+  $(id).addEventListener('change', async ()=>{
+    if(!activeTour) return;
+    activeTour[key] = $(id).value.trim();
+    await put('tours', activeTour);
+    $(id).classList.remove('bad');
+    if(key === 'building') $('barTitle').textContent = activeTour.building || 'סיור';
+  });
+});
+function clearBad(){ document.querySelectorAll('.bad').forEach(e=>e.classList.remove('bad')); }
+
+function tourMissing(){
+  const miss = [];
+  if(!$('fBuilding').value.trim()){ miss.push('בניין / כתובת'); $('fBuilding').classList.add('bad'); }
+  if(!$('fClient').value.trim()){ miss.push('לקוח / ועד בית'); $('fClient').classList.add('bad'); }
+  if(!$('fInspector').value.trim()){ miss.push('שם הבודק'); $('fInspector').classList.add('bad'); }
+  if(!$('fDate').value){ miss.push('תאריך הסיור'); $('fDate').classList.add('bad'); }
+  return miss;
+}
+function guardTour(){
+  clearBad();
+  const miss = tourMissing();
+  if(miss.length){
+    toast('חסר בפרטי הסיור: ' + miss.join(', '));
+    $('fBuilding').scrollIntoView({behavior:'smooth', block:'center'});
+    return false;
+  }
+  if(!defects.length){ toast('אין ליקויים בסיור'); return false; }
+  return true;
+}
+
+$('btnBack').addEventListener('click', async ()=>{
+  activeTour = null;
+  await loadTours();
+  await showStorage();
+  showView('tours');
+});
+
+$('btnFinish').addEventListener('click', async ()=>{
+  if(!confirm('לסיים את הסיור? הוא יישאר ברשימה ותוכל לפתוח אותו שוב בכל זמן.')) return;
+  activeTour.status = 'closed';
+  activeTour.closedAt = Date.now();
+  await put('tours', activeTour);
+  activeTour = null;
+  await loadTours();
+  await showStorage();
+  showView('tours');
+  toast('הסיור הסתיים ונשמר');
+});
+
+/* ==================== camera & draft ==================== */
+$('btnShoot').addEventListener('click', ()=>{
+  draft = null;
+  $('camIn').click();
+});
 
 $('camIn').addEventListener('change', async e => {
   const file = e.target.files[0];
   e.target.value = '';
   if(!file) return;
   const blob = await compress(file);
-  if(draft){ draft.photos.push(blob); renderPreview(); return; }
-  draft = {id:'d_'+Date.now(), photos:[blob], location:'', description:'', severity:'שוטף', trade:'חשמלאי'};
+  if(draft){ draft.photos.push({blob, anns:[]}); renderPhotos(); return; }
+  draft = {
+    id: uid('d'), tourId: activeTour.id, photos:[{blob, anns:[]}],
+    location:'', description:'', severity:'שוטף', trade:'חשמלאי', createdAt: Date.now()
+  };
   openSheet('ליקוי חדש');
 });
 
 function openSheet(title){
   $('sheetTitle').textContent = title;
-  $('fLoc').value  = draft.location;
-  $('fDesc').value = draft.description;
+  $('fLoc').value   = draft.location;
+  $('fDesc').value  = draft.description;
   $('fTrade').value = draft.trade;
   setSev(draft.severity);
-  renderPreview();
+  clearBad();
+  renderPhotos();
   $('sheet').classList.add('open');
-  setTimeout(()=>$('fLoc').focus(), 120);
 }
-function closeSheet(){ $('sheet').classList.remove('open'); draft = null; editingId = null; }
+function closeSheet(){ $('sheet').classList.remove('open'); draft = null; }
 
-function renderPreview(){
-  const box = $('preview');
+function renderPhotos(){
+  const box = $('photos');
   box.innerHTML = '';
-  draft.photos.forEach((b,i)=>{
+  draft.photos.forEach((p,i)=>{
+    const wrap = document.createElement('div');
+    wrap.className = 'photo';
     const img = new Image();
-    img.src = URL.createObjectURL(b);
+    img.src = URL.createObjectURL(p.blob);
     img.onload = ()=>URL.revokeObjectURL(img.src);
-    img.addEventListener('click', ()=>{
-      if(draft.photos.length === 1) return toast('חייבת להישאר תמונה אחת');
-      draft.photos.splice(i,1); renderPreview();
-    });
-    box.appendChild(img);
+    wrap.appendChild(img);
+
+    const mark = document.createElement('button');
+    mark.className = 'mark'; mark.type = 'button'; mark.textContent = 'סמן';
+    mark.addEventListener('click', ()=>openEditor(i));
+    wrap.appendChild(mark);
+
+    if(p.anns.length){
+      const b = document.createElement('span');
+      b.className = 'badge'; b.textContent = p.anns.length;
+      wrap.appendChild(b);
+    }
+    if(draft.photos.length > 1){
+      const rm = document.createElement('button');
+      rm.className = 'rm'; rm.type = 'button'; rm.textContent = '×';
+      rm.addEventListener('click', ()=>{ draft.photos.splice(i,1); renderPhotos(); });
+      wrap.appendChild(rm);
+    }
+    box.appendChild(wrap);
   });
   const add = document.createElement('button');
-  add.type = 'button'; add.textContent = '+ תמונה';
+  add.className = 'addphoto'; add.type = 'button'; add.textContent = '+ תמונה';
   add.addEventListener('click', ()=>$('camIn').click());
   box.appendChild(add);
 }
 
 function setSev(v){
-  [...$('sevChips').children].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.sev === v)));
+  [...$('sevChips').children].forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.sev === v)));
 }
-$('sevChips').addEventListener('click', e => {
-  const b = e.target.closest('button'); if(b) setSev(b.dataset.sev);
+$('sevChips').addEventListener('click', e=>{
+  const b = e.target.closest('button');
+  if(b) setSev(b.dataset.sev);
 });
 function currentSev(){
-  const on = [...$('sevChips').children].find(b => b.getAttribute('aria-pressed') === 'true');
+  const on = [...$('sevChips').children].find(b=>b.getAttribute('aria-pressed') === 'true');
   return on ? on.dataset.sev : 'שוטף';
 }
 
 $('btnCancel').addEventListener('click', closeSheet);
 
 $('btnSave').addEventListener('click', async ()=>{
-  const desc = $('fDesc').value.trim();
-  if(!desc) return toast('חסר תיאור הליקוי');
-  const rec = {
-    id: draft.id,
-    photos: draft.photos,
-    location: $('fLoc').value.trim() || 'לא צוין',
-    description: desc,
-    severity: currentSev(),
-    trade: $('fTrade').value,
-    createdAt: draft.createdAt || Date.now()
-  };
-  await put('defects', rec);
+  clearBad();
+  const miss = [];
+  if(!$('fLoc').value.trim()){ miss.push('מיקום'); $('fLoc').classList.add('bad'); }
+  if(!$('fDesc').value.trim()){ miss.push('תיאור'); $('fDesc').classList.add('bad'); }
+  if(miss.length) return toast('חסר: ' + miss.join(', '));
+
+  draft.location    = $('fLoc').value.trim();
+  draft.description = $('fDesc').value.trim();
+  draft.severity    = currentSev();
+  draft.trade       = $('fTrade').value;
+  await put('defects', draft);
   closeSheet();
-  await refresh();
+  await refreshDefects();
+  await showStorage();
   toast('נשמר במכשיר');
 });
 
-/* ============ list ============ */
-async function refresh(){
-  defects = (await getAll('defects')).sort((a,b)=>a.createdAt-b.createdAt);
+/* ==================== defects list ==================== */
+async function refreshDefects(){
+  const all = await getAll('defects');
+  defects = all.filter(d=>d.tourId === activeTour.id).sort((a,b)=>a.createdAt-b.createdAt);
   $('count').textContent = defects.length;
-  $('btnPdf').disabled = $('btnText').disabled = defects.length === 0;
+
+  const busy = defects.length === 0;
+  $('btnPdfShare').disabled = $('btnPdfDownload').disabled = $('btnText').disabled = busy;
 
   const list = $('list');
   list.innerHTML = '';
@@ -430,65 +700,335 @@ async function refresh(){
     const card = document.createElement('div');
     card.className = 'card';
     card.dataset.sev = d.severity;
+    const marks = d.photos.reduce((s,p)=>s + p.anns.length, 0);
     card.innerHTML =
-      '<div class="bar"></div>' +
-      '<img class="thumb" alt="">' +
+      '<div class="bar"></div><img class="thumb" alt="">' +
       '<div class="body">' +
-        '<div class="seq">ליקוי ' + (i+1) + (d.photos.length>1 ? ' · '+d.photos.length+' תמונות' : '') + '</div>' +
-        '<p class="loc"></p><p class="desc"></p>' +
-        '<div class="meta"><span class="sev"></span><span class="trade"></span></div>' +
+        '<div class="seq"></div><p class="loc"></p><p class="desc"></p>' +
+        '<div class="meta"></div>' +
         '<div class="acts"><button class="edit">עריכה</button><button class="del">מחיקה</button></div>' +
       '</div>';
     const img = card.querySelector('.thumb');
-    img.src = URL.createObjectURL(d.photos[0]);
+    img.src = URL.createObjectURL(d.photos[0].blob);
     img.onload = ()=>URL.revokeObjectURL(img.src);
-    card.querySelector('.loc').textContent   = d.location;
-    card.querySelector('.desc').textContent  = d.description;
-    card.querySelector('.sev').textContent   = 'דחיפות: ' + d.severity;
-    card.querySelector('.trade').textContent = '· ' + d.trade;
+    card.querySelector('.seq').textContent =
+      'ליקוי ' + (i+1) + (d.photos.length>1 ? ' · ' + d.photos.length + ' תמונות' : '') +
+      (marks ? ' · ' + marks + ' סימונים' : '');
+    card.querySelector('.loc').textContent  = d.location;
+    card.querySelector('.desc').textContent = d.description;
+    card.querySelector('.meta').textContent = 'דחיפות: ' + d.severity + ' · ' + d.trade;
     card.querySelector('.edit').addEventListener('click', ()=>{
-      draft = {id:d.id, photos:d.photos.slice(), location:d.location, description:d.description,
-               severity:d.severity, trade:d.trade, createdAt:d.createdAt};
+      draft = {
+        id:d.id, tourId:d.tourId,
+        photos:d.photos.map(p=>({blob:p.blob, anns:p.anns.map(a=>({...a}))})),
+        location:d.location, description:d.description,
+        severity:d.severity, trade:d.trade, createdAt:d.createdAt
+      };
       openSheet('עריכת ליקוי ' + (i+1));
     });
     card.querySelector('.del').addEventListener('click', async ()=>{
       if(!confirm('למחוק את ליקוי ' + (i+1) + '?')) return;
       await delRec('defects', d.id);
-      await refresh();
+      await refreshDefects();
+      await showStorage();
     });
     list.appendChild(card);
   });
 }
 
-/* ============ report ============ */
-function metaNow(){
-  return {
-    building: $('fBuilding').value.trim() || 'בניין ללא שם',
-    client:   $('fClient').value.trim(),
-    inspector:$('fInspector').value.trim(),
-    date:     $('fDate').value
+/* ==================== annotation editor ==================== */
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+function openEditor(photoIndex){
+  const p = draft.photos[photoIndex];
+  const url = URL.createObjectURL(p.blob);
+  const img = $('edImg');
+  img.onload = ()=>{
+    edState = {
+      photoIndex,
+      w: img.naturalWidth,
+      h: img.naturalHeight,
+      anns: p.anns.map(a=>({...a})),
+      sel: null,
+      url
+    };
+    $('edSvg').setAttribute('viewBox', '0 0 ' + edState.w + ' ' + edState.h);
+    $('editor').classList.add('open');
+    fitEditor();
+    drawAnns();
   };
-}
-function heDate(iso){
-  if(!iso) return '';
-  const [y,m,d] = iso.split('-');
-  return d + '/' + m + '/' + y;
-}
-function esc(s){
-  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  img.src = url;
 }
 
-async function buildReportHTML(){
-  const m = metaNow();
-  const urls = [];
+function fitEditor(){
+  if(!edState) return;
+  const stage = document.querySelector('.editor .stage');
+  const aw = stage.clientWidth - 24, ah = stage.clientHeight - 24;
+  if(aw <= 0 || ah <= 0) return;
+  const k = Math.min(aw/edState.w, ah/edState.h);
+  const wrap = $('cwrap');
+  wrap.style.width  = Math.floor(edState.w*k) + 'px';
+  wrap.style.height = Math.floor(edState.h*k) + 'px';
+}
+addEventListener('resize', fitEditor);
+addEventListener('orientationchange', ()=>setTimeout(fitEditor, 250));
+
+function closeEditor(){
+  $('editor').classList.remove('open');
+  if(edState && edState.url) URL.revokeObjectURL(edState.url);
+  edState = null;
+}
+
+function baseSize(){ return Math.max(edState.w, edState.h) * 0.22; }
+function strokeW(){ return Math.max(3, Math.max(edState.w, edState.h) / 170); }
+
+function addAnn(type){
+  const a = {
+    id: uid('a'), type,
+    cx: edState.w/2, cy: edState.h/2,
+    size: baseSize(), angle: type === 'text' ? 0 : -45,
+    text: ''
+  };
+  if(type === 'text'){
+    const t = prompt('טקסט לסימון:');
+    if(!t) return;
+    a.text = t;
+    a.size = baseSize() * 0.55;
+  }
+  edState.anns.push(a);
+  edState.sel = a.id;
+  drawAnns();
+}
+$('tArrow').addEventListener('click', ()=>addAnn('arrow'));
+$('tCircle').addEventListener('click', ()=>addAnn('circle'));
+$('tText').addEventListener('click', ()=>addAnn('text'));
+
+$('tDel').addEventListener('click', ()=>{
+  if(!edState.sel) return;
+  edState.anns = edState.anns.filter(a=>a.id !== edState.sel);
+  edState.sel = null;
+  drawAnns();
+});
+$('tCancel').addEventListener('click', closeEditor);
+$('tDone').addEventListener('click', ()=>{
+  draft.photos[edState.photoIndex].anns = edState.anns;
+  closeEditor();
+  renderPhotos();
+});
+
+function annGeom(a){
+  const r = a.angle * Math.PI / 180;
+  const half = a.size / 2;
+  return {
+    hx: a.cx + Math.cos(r)*half,
+    hy: a.cy + Math.sin(r)*half,
+    tx: a.cx - Math.cos(r)*half,
+    ty: a.cy - Math.sin(r)*half
+  };
+}
+
+function drawAnns(){
+  const svg = $('edSvg');
+  svg.innerHTML = '';
+  const sw = strokeW();
+
+  edState.anns.forEach(a=>{
+    const g = document.createElementNS(SVGNS, 'g');
+    g.dataset.id = a.id;
+    g.style.cursor = 'move';
+
+    if(a.type === 'arrow'){
+      const {hx,hy,tx,ty} = annGeom(a);
+      const r = a.angle*Math.PI/180, head = a.size*0.26;
+      const p1x = hx - Math.cos(r-0.42)*head, p1y = hy - Math.sin(r-0.42)*head;
+      const p2x = hx - Math.cos(r+0.42)*head, p2y = hy - Math.sin(r+0.42)*head;
+      const d = 'M'+tx+' '+ty+'L'+hx+' '+hy+'M'+p1x+' '+p1y+'L'+hx+' '+hy+'L'+p2x+' '+p2y;
+      g.appendChild(mkPath(d, sw*1.9, '#fff'));
+      g.appendChild(mkPath(d, sw, 'var(--mark)'));
+    }
+    else if(a.type === 'circle'){
+      g.appendChild(mkCircle(a, sw*1.9, '#fff'));
+      g.appendChild(mkCircle(a, sw, '#E02020'));
+    }
+    else {
+      g.appendChild(mkText(a, sw*1.6, '#fff', true));
+      g.appendChild(mkText(a, 0, '#E02020', false));
+    }
+
+    // invisible hit area
+    const hit = document.createElementNS(SVGNS,'circle');
+    hit.setAttribute('cx', a.cx); hit.setAttribute('cy', a.cy);
+    hit.setAttribute('r', a.size*0.6);
+    hit.setAttribute('fill','transparent');
+    g.appendChild(hit);
+
+    if(edState.sel === a.id){
+      const {hx,hy} = annGeom(a);
+      const hr = Math.max(edState.w, edState.h)/38;
+      const h1 = document.createElementNS(SVGNS,'circle');
+      h1.setAttribute('cx',hx); h1.setAttribute('cy',hy); h1.setAttribute('r',hr);
+      h1.setAttribute('fill','#0A5C9E'); h1.setAttribute('stroke','#fff');
+      h1.setAttribute('stroke-width', sw*0.8);
+      h1.dataset.handle = '1';
+      h1.style.cursor = 'grab';
+      g.appendChild(h1);
+    }
+    svg.appendChild(g);
+  });
+
+  $('tDel').disabled = !edState.sel;
+  $('edHint').textContent = edState.anns.length
+    ? 'גע בסימון לבחירה. גרירה מזיזה, הידית הכחולה משנה גודל וכיוון.'
+    : 'בחר כלי כדי להוסיף סימון על התמונה.';
+}
+
+function mkPath(d, w, color){
+  const p = document.createElementNS(SVGNS,'path');
+  p.setAttribute('d', d);
+  p.setAttribute('fill','none');
+  p.setAttribute('stroke', color === 'var(--mark)' ? '#E02020' : color);
+  p.setAttribute('stroke-width', w);
+  p.setAttribute('stroke-linecap','round');
+  p.setAttribute('stroke-linejoin','round');
+  return p;
+}
+function mkCircle(a, w, color){
+  const c = document.createElementNS(SVGNS,'ellipse');
+  c.setAttribute('cx', a.cx); c.setAttribute('cy', a.cy);
+  c.setAttribute('rx', a.size/2); c.setAttribute('ry', a.size/2.6);
+  c.setAttribute('fill','none');
+  c.setAttribute('stroke', color);
+  c.setAttribute('stroke-width', w);
+  c.setAttribute('transform','rotate('+a.angle+' '+a.cx+' '+a.cy+')');
+  return c;
+}
+function mkText(a, outline, color, isOutline){
+  const t = document.createElementNS(SVGNS,'text');
+  t.setAttribute('x', a.cx); t.setAttribute('y', a.cy);
+  t.setAttribute('text-anchor','middle');
+  t.setAttribute('dominant-baseline','central');
+  t.setAttribute('font-family','Assistant, sans-serif');
+  t.setAttribute('font-weight','800');
+  t.setAttribute('font-size', a.size);
+  t.setAttribute('fill', color);
+  t.setAttribute('direction','rtl');
+  if(isOutline){
+    t.setAttribute('stroke','#fff');
+    t.setAttribute('stroke-width', outline);
+    t.setAttribute('paint-order','stroke');
+  }
+  t.setAttribute('transform','rotate('+a.angle+' '+a.cx+' '+a.cy+')');
+  t.textContent = a.text;
+  return t;
+}
+
+/* --- pointer interaction --- */
+(function(){
+  const svg = $('edSvg');
+  let mode = null, target = null, start = null;
+
+  function toSvg(evt){
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+
+  svg.addEventListener('pointerdown', e=>{
+    if(!edState) return;
+    const g = e.target.closest('g');
+    if(!g){ edState.sel = null; drawAnns(); return; }
+    const a = edState.anns.find(x=>x.id === g.dataset.id);
+    if(!a) return;
+    edState.sel = a.id;
+    target = a;
+    mode = e.target.dataset.handle ? 'handle' : 'move';
+    const p = toSvg(e);
+    start = {px:p.x, py:p.y, cx:a.cx, cy:a.cy};
+    svg.setPointerCapture(e.pointerId);
+    drawAnns();
+    e.preventDefault();
+  });
+
+  svg.addEventListener('pointermove', e=>{
+    if(!mode || !target) return;
+    const p = toSvg(e);
+    if(mode === 'move'){
+      target.cx = start.cx + (p.x - start.px);
+      target.cy = start.cy + (p.y - start.py);
+    }else{
+      const dx = p.x - target.cx, dy = p.y - target.cy;
+      target.size = Math.max(edState.w*0.04, Math.hypot(dx,dy) * 2);
+      target.angle = Math.atan2(dy,dx) * 180 / Math.PI;
+    }
+    drawAnns();
+    e.preventDefault();
+  });
+
+  const stop = e=>{
+    if(mode){ mode = null; target = null; }
+  };
+  svg.addEventListener('pointerup', stop);
+  svg.addEventListener('pointercancel', stop);
+})();
+
+/* --- render annotations onto a canvas (for the report) --- */
+async function renderPhoto(p){
+  if(!p.anns.length) return await blobToDataURL(p.blob);
+  const bmp = await createImageBitmap(p.blob);
+  const cv = document.createElement('canvas');
+  cv.width = bmp.width; cv.height = bmp.height;
+  const c = cv.getContext('2d');
+  c.drawImage(bmp, 0, 0);
+  bmp.close();
+  const sw = Math.max(3, Math.max(cv.width, cv.height)/170);
+
+  p.anns.forEach(a=>{
+    c.save();
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    if(a.type === 'arrow'){
+      const r = a.angle*Math.PI/180, half = a.size/2, head = a.size*0.26;
+      const hx = a.cx+Math.cos(r)*half, hy = a.cy+Math.sin(r)*half;
+      const tx = a.cx-Math.cos(r)*half, ty = a.cy-Math.sin(r)*half;
+      const draw = ()=>{
+        c.beginPath();
+        c.moveTo(tx,ty); c.lineTo(hx,hy);
+        c.moveTo(hx-Math.cos(r-0.42)*head, hy-Math.sin(r-0.42)*head);
+        c.lineTo(hx,hy);
+        c.lineTo(hx-Math.cos(r+0.42)*head, hy-Math.sin(r+0.42)*head);
+        c.stroke();
+      };
+      c.strokeStyle = '#fff'; c.lineWidth = sw*1.9; draw();
+      c.strokeStyle = '#E02020'; c.lineWidth = sw; draw();
+    }
+    else if(a.type === 'circle'){
+      c.translate(a.cx, a.cy); c.rotate(a.angle*Math.PI/180);
+      const draw = ()=>{ c.beginPath(); c.ellipse(0,0,a.size/2,a.size/2.6,0,0,Math.PI*2); c.stroke(); };
+      c.strokeStyle = '#fff'; c.lineWidth = sw*1.9; draw();
+      c.strokeStyle = '#E02020'; c.lineWidth = sw; draw();
+    }
+    else{
+      c.translate(a.cx, a.cy); c.rotate(a.angle*Math.PI/180);
+      c.font = '800 ' + a.size + 'px Assistant, sans-serif';
+      c.textAlign = 'center'; c.textBaseline = 'middle';
+      c.direction = 'rtl';
+      c.strokeStyle = '#fff'; c.lineWidth = sw*1.6; c.strokeText(a.text, 0, 0);
+      c.fillStyle = '#E02020'; c.fillText(a.text, 0, 0);
+    }
+    c.restore();
+  });
+  return cv.toDataURL('image/jpeg', 0.85);
+}
+
+/* ==================== report ==================== */
+async function buildReport(){
+  const t = activeTour;
   let items = '';
-  defects.forEach((d,i)=>{
+  for(let i=0;i<defects.length;i++){
+    const d = defects[i];
     let imgs = '';
-    d.photos.forEach(b=>{
-      const u = URL.createObjectURL(b);
-      urls.push(u);
-      imgs += '<img src="' + u + '" alt="">';
-    });
+    for(const p of d.photos){
+      imgs += '<img src="' + (await renderPhoto(p)) + '" alt="">';
+    }
     items +=
       '<div class="rep-item" data-sev="' + esc(d.severity) + '">' +
         '<h3>' + (i+1) + '. ' + esc(d.location) + '</h3>' +
@@ -496,23 +1036,26 @@ async function buildReportHTML(){
         '<p>' + esc(d.description) + '</p>' +
         '<div class="rep-imgs">' + imgs + '</div>' +
       '</div>';
-  });
-  const counts = SEVS.map(s => s + ': ' + defects.filter(d=>d.severity===s).length).join(' | ');
+  }
+  const counts = SEVS.map(s=>s + ': ' + defects.filter(d=>d.severity===s).length).join(' | ');
   $('report').innerHTML =
     '<div class="rep">' +
       '<div class="rep-head">' +
-        '<h1>דוח ליקויים — ' + esc(m.building) + '</h1>' +
+        '<h1>דוח ליקויים — ' + esc(t.building) + '</h1>' +
         '<div class="sub">' +
-          (m.client ? 'לקוח: ' + esc(m.client) + '<br>' : '') +
-          'תאריך סיור: ' + heDate(m.date) + '<br>' +
-          'סה"כ ליקויים: ' + defects.length + ' (' + counts + ')' +
-          (m.inspector ? '<br>נבדק על ידי: ' + esc(m.inspector) : '') +
+          'לקוח: ' + esc(t.client) + '<br>' +
+          'תאריך סיור: ' + heDate(t.date) + '<br>' +
+          'סה"כ ליקויים: ' + defects.length + ' (' + counts + ')<br>' +
+          'נבדק על ידי: ' + esc(t.inspector) +
         '</div>' +
       '</div>' + items +
       '<div class="rep-foot">הדוח הופק אוטומטית ממערכת סיורי ליקויים.</div>' +
     '</div>';
-  await new Promise(r => setTimeout(r, 60));
-  return urls;
+  const imgs = [...$('report').querySelectorAll('img')];
+  await Promise.all(imgs.map(im => im.complete ? Promise.resolve()
+    : new Promise(r => { im.onload = im.onerror = r; })));
+  if(document.fonts && document.fonts.ready) await document.fonts.ready;
+  await new Promise(r=>setTimeout(r, 60));
 }
 
 function loadHtml2Pdf(){
@@ -523,26 +1066,26 @@ function loadHtml2Pdf(){
   ];
   return new Promise((res,rej)=>{
     let i = 0;
-    (function tryNext(){
-      if(i >= srcs.length) return rej(new Error('no cdn'));
+    (function next(){
+      if(i >= srcs.length) return rej(new Error('cdn'));
       const s = document.createElement('script');
       s.src = srcs[i++];
-      s.onload = res;
-      s.onerror = tryNext;
+      s.onload = res; s.onerror = next;
       document.head.appendChild(s);
     })();
   });
 }
 
-$('btnPdf').addEventListener('click', async ()=>{
-  const btn = $('btnPdf'), old = btn.textContent;
+function pdfName(){
+  return 'דוח ליקויים - ' + activeTour.building + ' - ' + heDate(activeTour.date).replace(/\//g,'.') + '.pdf';
+}
+
+async function makePdf(btn, label){
+  const old = btn.textContent;
   btn.disabled = true; btn.textContent = 'מייצר...';
-  let urls = [];
   try{
     await loadHtml2Pdf();
-    urls = await buildReportHTML();
-    const m = metaNow();
-    const name = 'דוח ליקויים - ' + m.building + ' - ' + heDate(m.date).replace(/\//g,'.') + '.pdf';
+    await buildReport();
     const blob = await html2pdf().set({
       margin: [10,8,12,8],
       image: {type:'jpeg', quality:0.85},
@@ -550,52 +1093,126 @@ $('btnPdf').addEventListener('click', async ()=>{
       jsPDF: {unit:'mm', format:'a4', orientation:'portrait'},
       pagebreak: {mode:['css','legacy'], avoid:'.rep-item'}
     }).from($('report').firstElementChild).outputPdf('blob');
-
-    const file = new File([blob], name, {type:'application/pdf'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], title:'דוח ליקויים'});
-    }else{
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = name;
-      a.click();
-      setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
-      toast('הדוח ירד לתיקיית ההורדות');
-    }
+    return blob;
   }catch(err){
-    if(err && err.name === 'AbortError'){ /* המשתמש סגר את מגש השיתוף */ }
-    else{ console.error(err); toast('הפקת הדוח נכשלה — בדוק חיבור לרשת'); }
+    console.error(err);
+    toast('הפקת הדוח נכשלה — בדוק חיבור לרשת');
+    return null;
   }finally{
-    urls.forEach(URL.revokeObjectURL);
     $('report').innerHTML = '';
+    btn.disabled = false; btn.textContent = old;
+  }
+}
+
+$('btnPdfShare').addEventListener('click', async ()=>{
+  if(!guardTour()) return;
+  const blob = await makePdf($('btnPdfShare'));
+  if(!blob) return;
+  const file = new File([blob], pdfName(), {type:'application/pdf'});
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{ await navigator.share({files:[file], title:'דוח ליקויים'}); }
+    catch(e){ if(e.name !== 'AbortError') toast('השיתוף נכשל'); }
+  }else{
+    download(blob, pdfName());
+    toast('השיתוף לא נתמך כאן — הדוח ירד למכשיר');
+  }
+});
+
+$('btnPdfDownload').addEventListener('click', async ()=>{
+  if(!guardTour()) return;
+  const blob = await makePdf($('btnPdfDownload'));
+  if(!blob) return;
+  download(blob, pdfName());
+  toast('הדוח ירד לתיקיית ההורדות');
+});
+
+function download(blob, name){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+}
+
+$('btnText').addEventListener('click', ()=>{
+  if(!guardTour()) return;
+  const t = activeTour;
+  let s = 'דוח ליקויים — ' + t.building + '\n' +
+          'לקוח: ' + t.client + '\n' +
+          'תאריך: ' + heDate(t.date) + '\n' +
+          'סה"כ ליקויים: ' + defects.length + '\n\n';
+  defects.forEach((d,i)=>{
+    s += (i+1) + '. ' + d.location + '\n' + d.description + '\n' +
+         'דחיפות: ' + d.severity + ' | ' + d.trade + '\n\n';
+  });
+  s += 'נבדק על ידי: ' + t.inspector;
+  window.open('https://wa.me/?text=' + encodeURIComponent(s), '_blank');
+});
+
+/* ==================== backup ==================== */
+$('btnExport').addEventListener('click', async ()=>{
+  const btn = $('btnExport'), old = btn.textContent;
+  btn.disabled = true; btn.textContent = 'אורז...';
+  try{
+    const ts = await getAll('tours');
+    const ds = await getAll('defects');
+    const out = {version:2, exportedAt:Date.now(), tours:ts, defects:[]};
+    for(const d of ds){
+      const photos = [];
+      for(const p of d.photos) photos.push({data: await blobToDataURL(p.blob), anns:p.anns});
+      out.defects.push({...d, photos});
+    }
+    const blob = new Blob([JSON.stringify(out)], {type:'application/json'});
+    const name = 'גיבוי סיורי ליקויים - ' + new Date().toISOString().slice(0,10) + '.json';
+    download(blob, name);
+    toast('הגיבוי ירד למכשיר');
+  }catch(err){
+    console.error(err); toast('הייצוא נכשל');
+  }finally{
     btn.disabled = false; btn.textContent = old;
   }
 });
 
-$('btnText').addEventListener('click', ()=>{
-  const m = metaNow();
-  let t = 'דוח ליקויים — ' + m.building + '\n';
-  if(m.client) t += 'לקוח: ' + m.client + '\n';
-  t += 'תאריך: ' + heDate(m.date) + '\n';
-  t += 'סה"כ ליקויים: ' + defects.length + '\n\n';
-  defects.forEach((d,i)=>{
-    t += (i+1) + '. ' + d.location + '\n' + d.description + '\n' +
-         'דחיפות: ' + d.severity + ' | ' + d.trade + '\n\n';
-  });
-  window.open('https://wa.me/?text=' + encodeURIComponent(t), '_blank');
+$('btnImport').addEventListener('click', ()=>$('fileIn').click());
+
+$('fileIn').addEventListener('change', async e=>{
+  const file = e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  if(!confirm('לשחזר מהגיבוי? סיורים קיימים עם אותו מזהה יידרסו. סיורים אחרים יישארו.')) return;
+  try{
+    const data = JSON.parse(await file.text());
+    if(!data.tours || !data.defects) throw new Error('bad');
+    for(const t of data.tours) await put('tours', t);
+    for(const d of data.defects){
+      const photos = d.photos.map(p=>({blob: dataURLToBlob(p.data), anns:p.anns || []}));
+      await put('defects', {...d, photos});
+    }
+    await loadTours();
+    await showStorage();
+    toast('שוחזרו ' + data.tours.length + ' סיורים');
+  }catch(err){
+    console.error(err); toast('הקובץ אינו גיבוי תקין');
+  }
 });
 
-$('btnNew').addEventListener('click', async ()=>{
-  if(defects.length && !confirm('לפתוח סיור חדש? ' + defects.length + ' הליקויים הנוכחיים יימחקו מהמכשיר.')) return;
-  await clearStore('defects');
-  await clearStore('meta');
-  await loadMeta();
-  await refresh();
-  $('tourBox').open = true;
-  toast('סיור חדש');
-});
+/* ==================== storage ==================== */
+async function showStorage(){
+  const el = $('storageInfo');
+  if(!navigator.storage || !navigator.storage.estimate){ el.textContent = ''; return; }
+  try{
+    const {usage, quota} = await navigator.storage.estimate();
+    const mb = u => (u/1048576).toFixed(1);
+    const pct = quota ? (usage/quota*100) : 0;
+    el.textContent = 'תפוס במכשיר: ' + mb(usage) + ' מגה מתוך ' + (quota/1073741824).toFixed(1) + ' ג׳יגה זמינים';
+    el.classList.toggle('warn', pct > 80);
+    if(pct > 80) el.textContent += ' — כדאי לייצא גיבוי ולמחוק סיורים ישנים';
+  }catch(e){ el.textContent = ''; }
+}
 
-/* ============ boot ============ */
+/* ==================== boot ==================== */
 function netState(){ $('netdot').classList.toggle('off', !navigator.onLine); }
 addEventListener('online', netState);
 addEventListener('offline', netState);
@@ -605,13 +1222,16 @@ addEventListener('offline', netState);
     db = await openDB();
   }catch(err){
     document.body.innerHTML =
-      '<div style="padding:24px;font-family:sans-serif">האחסון במכשיר חסום. פתח את הדף מכתובת https ולא כקובץ מקומי.</div>';
+      '<div style="padding:28px;font-family:sans-serif">האחסון במכשיר חסום. פתח את הדף מכתובת https ולא כקובץ מקומי.</div>';
     return;
   }
+  if(navigator.storage && navigator.storage.persist){
+    try{ await navigator.storage.persist(); }catch(e){}
+  }
   netState();
-  await loadMeta();
-  await refresh();
-  if(!$('fBuilding').value) $('tourBox').open = true;
+  await loadTours();
+  await showStorage();
+  showView('tours');
 })();
 </script>
 </body>
