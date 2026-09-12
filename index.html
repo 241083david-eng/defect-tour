@@ -133,9 +133,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
 }
 .tourcard h3{margin:0 0 6px;font-size:19px}
 .tourcard .sub{color:var(--ink2);font-size:15px;margin:0 0 14px}
-.tourcard .row{display:flex;gap:20px}
-.tourcard .row button{background:none;border:0;padding:6px 0;font-weight:700;color:var(--action);font-size:16px}
-.tourcard .row button.del{color:var(--sev1)}
+.tourcard .row{display:flex;flex-direction:column;gap:12px}
+.tourcard .row button{width:100%;min-height:56px;font-size:16px;font-weight:700;margin:0}
 .tourcard.open{border-color:var(--action);border-width:2px}
 
 /* ---------- sheet ---------- */
@@ -210,6 +209,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
 .toolrow button.del{border-color:#5A2723;color:#FF8A7D}
 .toolrow button:disabled{opacity:.4}
 .edhint{color:#8FA3B3;font-size:14px;text-align:center;margin:0}
+.actionhint{font-size:13px;line-height:1.5;margin:4px 0 14px;text-align:center}
+.btn:has(+ .actionhint){margin-bottom:4px}
 
 /* ---------- toast ---------- */
 .toast{
@@ -265,7 +266,9 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
   <h2 class="section">גיבוי</h2>
   <p class="storage" id="storageInfo"></p>
   <button class="btn" id="btnExport">ייצוא גיבוי לקובץ</button>
+  <p class="edhint actionhint">שומר את כל הסיורים לקובץ אחד בהורדות. שלח אותו לעצמך בוואטסאפ או לדרייב — זה הגיבוי היחיד מחוץ לטלפון</p>
   <button class="btn quiet" id="btnImport">שחזור מקובץ גיבוי</button>
+  <p class="edhint actionhint">טוען סיורים מקובץ גיבוי שנשמר קודם. שימושי גם במעבר לטלפון חדש</p>
 </main>
 
 <!-- ============ VIEW: single tour ============ -->
@@ -303,8 +306,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
 
   <h2 class="section">הפקת דוח</h2>
   <button class="btn primary" id="btnPdfShare">צור PDF ושתף</button>
+  <p class="edhint actionhint">שולח את הדוח בוואטסאפ או במייל, בלי לשמור אותו במכשיר</p>
   <button class="btn" id="btnPdfDownload">הורד PDF למכשיר</button>
+  <p class="edhint actionhint">שומר את קובץ הדוח בתיקיית ההורדות של הטלפון</p>
   <button class="btn quiet" id="btnText">סיכום טקסט לוואטסאפ</button>
+  <p class="edhint actionhint">מעתיק את רשימת הליקויים כטקסט בלבד, בלי תמונות</p>
   <button class="btn danger" id="btnFinish">סיים סיור</button>
 </main>
 
@@ -491,7 +497,7 @@ async function loadTours(){
     el.className = 'tourcard' + (t.status === 'open' ? ' open' : '');
     el.innerHTML =
       '<h3></h3><p class="sub"></p>' +
-      '<div class="row"><button class="op">פתח</button><button class="del">מחק</button></div>';
+      '<div class="row"><button class="op btn primary">פתח</button><button class="del btn danger">מחק</button></div>';
     el.querySelector('h3').textContent = t.building || 'סיור ללא שם';
     el.querySelector('.sub').textContent =
       heDate(t.date) + ' · ' + n + ' ליקויים · ' + (t.status === 'open' ? 'פתוח' : 'הסתיים');
