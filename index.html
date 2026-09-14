@@ -1058,6 +1058,12 @@ async function buildReport(){
   const counts = SEVS.map(s=>s + ': ' + defects.filter(d=>d.severity===s).length).join(' | ');
   $('report').innerHTML =
     '<div class="rep">' +
+      '<div style="page-break-after:always;text-align:center">' +
+        '<img src="logo.jpg" style="max-width:200px">' +
+        '<h1 style="font-size:32px">' + esc(BIZ.name) + '</h1>' +
+        '<h2>דוח סיור בדיקת ליקויים</h2>' +
+        '<div>' + esc(t.building) + '<br>' + heDate(t.date) + '</div>' +
+      '</div>' +
       '<div class="rep-head">' +
         '<h1>דוח ליקויים — ' + esc(t.building) + '</h1>' +
         '<div class="sub">' +
