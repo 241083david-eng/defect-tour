@@ -1058,11 +1058,21 @@ async function buildReport(){
   const counts = SEVS.map(s=>s + ': ' + defects.filter(d=>d.severity===s).length).join(' | ');
   $('report').innerHTML =
     '<div class="rep">' +
-      '<div style="page-break-after:always;text-align:center">' +
-        '<img src="logo.jpg" style="max-width:200px">' +
-        '<h1 style="font-size:32px">' + esc(BIZ.name) + '</h1>' +
-        '<h2>דוח סיור בדיקת ליקויים</h2>' +
-        '<div>' + esc(t.building) + '<br>' + heDate(t.date) + '</div>' +
+      '<div style="page-break-after:always;text-align:center;border:3px solid #1e5fa8;padding:40px;height:1055px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between">' +
+        '<div>' +
+          '<img src="logo.jpg" style="max-width:200px">' +
+          '<h1 style="font-size:40px;font-weight:800">' + esc(BIZ.inspector) + '</h1>' +
+          '<h2 style="font-size:30px;font-weight:800">דוח סיור בדיקת ליקויים</h2>' +
+          '<div>' + esc(t.building) + '<br>' + heDate(t.date) + '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div style="border-top:1px solid #ccc;width:60%;margin:0 auto"></div>' +
+          '<div style="font-size:14px;color:#444;margin-top:10px;line-height:1.8">' +
+            esc(BIZ.name) + '<br>' +
+            'טלפון: ' + esc(BIZ.phone) + '<br>' +
+            esc(BIZ.email) +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div class="rep-head">' +
         '<h1>דוח ליקויים — ' + esc(t.building) + '</h1>' +
