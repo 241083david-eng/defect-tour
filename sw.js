@@ -1,4 +1,4 @@
-const CACHE = 'defect-tour-v4';
+const CACHE = 'defect-tour-v5';
 const ASSETS = [
   './',
   './index.html',
