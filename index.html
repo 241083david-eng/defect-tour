@@ -1120,6 +1120,7 @@ async function makePdf(btn, label){
   try{
     await loadHtml2Pdf();
     await buildReport();
+    $('report').style.width = '794px';
     const blob = await html2pdf().set({
       margin: [10,8,12,8],
       image: {type:'jpeg', quality:0.85},
@@ -1134,6 +1135,7 @@ async function makePdf(btn, label){
     return null;
   }finally{
     $('report').innerHTML = '';
+    $('report').style.width = '';
     btn.disabled = false; btn.textContent = old;
   }
 }
