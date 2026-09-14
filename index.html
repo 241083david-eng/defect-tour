@@ -1058,7 +1058,7 @@ async function buildReport(){
   const counts = SEVS.map(s=>s + ': ' + defects.filter(d=>d.severity===s).length).join(' | ');
   $('report').innerHTML =
     '<div class="rep">' +
-      '<div style="page-break-after:always;text-align:center;border:3px solid #1e5fa8;padding:40px;height:1055px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between">' +
+      '<div style="page-break-after:always;text-align:center;border:3px solid #1e5fa8;padding:30px;height:950px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between">' +
         '<div>' +
           '<img src="logo.jpg" style="max-width:200px">' +
           '<h1 style="font-size:40px;font-weight:800">' + esc(BIZ.inspector) + '</h1>' +
@@ -1067,7 +1067,7 @@ async function buildReport(){
         '</div>' +
         '<div>' +
           '<div style="border-top:1px solid #ccc;width:60%;margin:0 auto"></div>' +
-          '<div style="font-size:14px;color:#444;margin-top:10px;line-height:1.8">' +
+          '<div style="font-size:14px;color:#444;font-weight:700;margin-top:10px;line-height:1.8">' +
             esc(BIZ.name) + '<br>' +
             'טלפון: ' + esc(BIZ.phone) + '<br>' +
             esc(BIZ.email) +
