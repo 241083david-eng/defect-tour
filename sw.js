@@ -1,10 +1,11 @@
-const CACHE = 'defect-tour-v2';
+const CACHE = 'defect-tour-v3';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './logo.jpg'
 ];
 
 self.addEventListener('install', e => {
