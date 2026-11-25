@@ -1,0 +1,5 @@
+backups/
+scripts/save-message.txt
+# Internal project notes stay on this computer only (public repo). Backed up by scripts/backup.cmd; full history in local branch local-notes-history.
+CLAUDE.md
+docs/

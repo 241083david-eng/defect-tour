@@ -81,6 +81,7 @@ h2.section{font-size:19px;margin:8px 0 14px;font-weight:800}
 }
 .shoot:active{transform:translateY(2px);box-shadow:0 1px 0 var(--action-dark)}
 .shoot svg{width:32px;height:32px;fill:currentColor}
+.btn.gallery{margin-top:12px}
 .hint{margin:0 2px 26px;font-size:15px;color:var(--ink2)}
 
 /* ---------- fields ---------- */
@@ -299,6 +300,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
     <svg viewBox="0 0 24 24"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3zm3 5.5a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11m0 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7"/></svg>
     צלם ליקוי
   </button>
+  <button class="btn gallery" id="btnGallery" type="button">העלה תמונה מהגלריה</button>
   <p class="hint">כל ליקוי נשמר מיד. אפשר לעבוד בלי רשת ולהפיק את הדוח בסוף.</p>
 
   <h2 class="section">ליקויים</h2>
@@ -389,6 +391,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--action);outline-
 </div>
 
 <input type="file" id="camIn" accept="image/*" capture="environment" hidden>
+<input type="file" id="galIn" accept="image/*" multiple hidden>
 <input type="file" id="fileIn" accept="application/json,.json" hidden>
 <div class="toast" id="toast"></div>
 <div id="report"></div>
@@ -605,18 +608,31 @@ $('btnShoot').addEventListener('click', ()=>{
   $('camIn').click();
 });
 
-$('camIn').addEventListener('change', async e => {
-  const file = e.target.files[0];
+$('btnGallery').addEventListener('click', ()=>{
+  draft = null;
+  $('galIn').click();
+});
+
+// camera gives one photo, gallery may give several: all go into the same defect
+async function addPhotos(e){
+  const files = [...e.target.files].filter(f => f.type.startsWith('image/'));
   e.target.value = '';
-  if(!file) return;
-  const blob = await compress(file);
-  if(draft){ draft.photos.push({blob, anns:[]}); renderPhotos(); return; }
+  if(!files.length) return;
+  const photos = [];
+  for(const f of files){
+    try { photos.push({blob: await compress(f), anns:[]}); }
+    catch(err){ toast('תמונה אחת לא נטענה'); }
+  }
+  if(!photos.length) return;
+  if(draft){ draft.photos.push(...photos); renderPhotos(); return; }
   draft = {
-    id: uid('d'), tourId: activeTour.id, photos:[{blob, anns:[]}],
+    id: uid('d'), tourId: activeTour.id, photos,
     location:'', description:'', severity:'שוטף', trade:'חשמלאי', createdAt: Date.now()
   };
   openSheet('ליקוי חדש');
-});
+}
+$('camIn').addEventListener('change', addPhotos);
+$('galIn').addEventListener('change', addPhotos);
 
 function openSheet(title){
   $('sheetTitle').textContent = title;
@@ -663,6 +679,10 @@ function renderPhotos(){
   add.className = 'addphoto'; add.type = 'button'; add.textContent = '+ תמונה';
   add.addEventListener('click', ()=>$('camIn').click());
   box.appendChild(add);
+  const gal = document.createElement('button');
+  gal.className = 'addphoto'; gal.type = 'button'; gal.textContent = '+ מהגלריה';
+  gal.addEventListener('click', ()=>$('galIn').click());
+  box.appendChild(gal);
 }
 
 function setSev(v){
